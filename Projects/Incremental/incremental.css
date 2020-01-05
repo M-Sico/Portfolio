@@ -1,0 +1,11 @@
+.nav-container {
+	padding: 0% 10%;
+}
+
+.nav-button {
+	height: 100%;	width: 15%;
+	display: inline-block;
+}
+	.nav-button:hover {
+		background-color: white;
+	}
