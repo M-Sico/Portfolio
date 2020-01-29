@@ -1,8 +1,5 @@
 var version = 0.1
 
-
-
-
 function showHide(ID) {
     var elem = document.getElementById(ID);
     if (elem.style.display != "none") {
@@ -11,4 +8,11 @@ function showHide(ID) {
     else {
         elem.style.display = "";
     }
+}
+
+// Initialize player
+
+var player = {
+  name:"",
+  job:"",
 }
