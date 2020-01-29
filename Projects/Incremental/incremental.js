@@ -1,3 +1,8 @@
+var version = 0.1
+
+
+
+
 function showHide(ID) {
     var elem = document.getElementById(ID);
     if (elem.style.display != "none") {
