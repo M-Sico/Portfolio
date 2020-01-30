@@ -15,4 +15,5 @@ function showHide(ID) {
 var player = {
   name:"",
   job:"",
+
 }
