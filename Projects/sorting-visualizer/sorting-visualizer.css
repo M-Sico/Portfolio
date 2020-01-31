@@ -1,0 +1,19 @@
+#container {
+  text-align: center;
+}
+
+#vis-container {
+  height: 500px;
+  width: 95vw;
+  background-color: white;
+  margin-left: auto; margin-right: auto;
+}
+
+#vis-column {
+  height: 100px;
+  width: .5vw;
+  float: left;
+  background-color: white;
+  border: solid 1px black;
+  margin-left: 1px;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Michael Sico">
+
+  <title>Sorting Algorithm Visualizer</title>
+
+  <link href="sorting-visualizer.css" rel="stylesheet">
+</head>
+<body>
+  <div id="container">
+    <div id="vis-container">
+    </div>
+    <div id="vis-controls">
+      <div>
+        <select name="sorting-algorithm">
+          <option value="bubble">bubble</option>
+          <option value="insertion">insertion</option>
+        </select>
+      </div>
+      <input type="text" id="num-list" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers">
+      <input type="submit" value="Populate" onclick="createColumn()">
+      <input type="submit" value="Swap" onclick="swapCol()">
+    </div>
+  </div>
+
+  <script src="sorting-visualizer.js"></script>
+</body>
