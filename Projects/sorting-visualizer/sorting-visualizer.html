@@ -6,28 +6,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="Michael Sico">
+  <meta name="author" content="Michael Sico, Carlos Roman">
 
   <title>Sorting Algorithm Visualizer</title>
 
   <link href="sorting-visualizer.css" rel="stylesheet">
 </head>
 <body>
-  <div id="container">
-    <div id="vis-container">
+  <header>
+    <div id="info">
+      i
     </div>
-    <div id="vis-controls">
-      <div>
-        <select name="sorting-algorithm">
-          <option value="bubble">bubble</option>
-          <option value="insertion">insertion</option>
-        </select>
+    <div id="info-dump">Authors: Michael Sico, Carlos Roman</div>
+  </header>
+  <section>
+    <div id="container">
+      <div id="vis-container">
+        <div class="clear"></div>
       </div>
-      <input type="text" id="num-list" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers">
-      <input type="submit" value="Populate" onclick="createColumn()">
-      <input type="submit" value="Swap" onclick="swapCol()">
+      <div id="vis-controls">
+        <div>
+          <input type="button" value="<">
+          <input type="button" value=">">
+          <br />
+          <select name="sorting-algorithm">
+            <option value="bubble">bubble</option>
+            <option value="insertion">insertion</option>
+            quick merge selection
+          </select>
+        </div>
+        <input type="text" id="num-list" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers">
+        <input type="submit" id="populate" value="Populate" onclick="createColumn()">
+        <input type="submit" id="swap" value="Swap" onclick="transform()">
+      </div>
     </div>
-  </div>
+  </section>
+  <section>
+    <div>c++, java, python, javascript</div>
+    <div>
+      CODEEE
+    </div>
+  </section>
 
   <script src="sorting-visualizer.js"></script>
 </body>

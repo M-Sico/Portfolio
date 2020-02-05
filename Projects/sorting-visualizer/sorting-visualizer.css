@@ -1,19 +1,44 @@
+.clear {
+  clear:both;
+}
+
 #container {
   text-align: center;
 }
 
 #vis-container {
   height: 500px;
-  width: 95vw;
+  max-width: 95vw;
   background-color: white;
   margin-left: auto; margin-right: auto;
+  transform: scale(1,-1);
+  display:table;
 }
 
 #vis-column {
-  height: 100px;
-  width: .5vw;
+  max-height: 500px;
+  min-width: .5vw; max-width: 2vw;
   float: left;
   background-color: white;
-  border: solid 1px black;
+  border: solid 1px black; border-bottom-color: red;
   margin-left: 1px;
+  display:table-row;
+}
+@media (max-width:320px) {
+  #vis-column {
+    background-color: black;
+    min-width: 1px;
+    border: 0px;
+  }
+}
+
+#info {
+  background-color: red;
+  width: 25px; height: 25px;
+  text-align: center;
+  display:inline-block;
+}
+
+#info-dump {
+  display:none;
 }
