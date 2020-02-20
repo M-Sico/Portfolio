@@ -19834,6 +19834,7 @@ function createColumn() {
     container.appendChild(elem);
   }
   document.getElementById("populate").disabled = true;
+  document.getElementById("swap").disabled = false;
 }
 
 function swapCol(index_1, index_2) {
@@ -19873,7 +19874,7 @@ document.getElementById("info").onmouseover = function(){
 document.getElementById("info").onmouseout = function(){
   document.getElementById("info-dump").style.display = "none";
 }
-
+document.getElementById("swap").disabled = true;
 
 //array: array of all elements with ID column
 //const bar_width = screen.availwidth / array.length;

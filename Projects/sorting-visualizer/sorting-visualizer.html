@@ -11,42 +11,174 @@
   <title>Sorting Algorithm Visualizer</title>
 
   <link href="sorting-visualizer.css" rel="stylesheet">
+  <script type="text/javascript"
+       src="https://cdn.jsdelivr.net/npm/brython@3.8.7/brython.min.js">
+   </script>
+
 </head>
 <body>
-  <header>
-    <div id="info">
-      i
-    </div>
-    <div id="info-dump">Authors: Michael Sico, Carlos Roman</div>
-  </header>
   <section>
     <div id="container">
       <div id="vis-container">
         <div class="clear"></div>
       </div>
-      <div id="vis-controls">
-        <div>
-          <input type="button" value="<">
-          <input type="button" value=">">
-          <br />
-          <select name="sorting-algorithm">
-            <option value="bubble">bubble</option>
-            <option value="insertion">insertion</option>
-            quick merge selection
-          </select>
+      <div id="vis-controls" class="height-10em">
+        <div class="float-left width-75 height-100">
+          <textarea id="num-list" class="width-100 height-100" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers"></textarea>
         </div>
-        <input type="text" id="num-list" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers">
-        <input type="submit" id="populate" value="Populate" onclick="createColumn()">
-        <input type="submit" id="swap" value="Swap" onclick="transform()">
+        <div class="float-right width-24">
+          <select name="sorting-algorithm" class="bttn width-100 display-block">
+            <option value="bubble">Bubble Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="selection">Selection Sort</option>
+            <option value="merge">Merge Sort</option>
+            <option value="quick">Quick Sort</option>
+          </select>
+          <input type="submit" id="populate" class="bttn width-100 display-block" value="Populate" onclick="createColumn()">
+          <input type="submit" id="swap" class="bttn width-100 display-block" value="Swap" onclick="transform()">
+        </div>
+        <div class="clear"></div>
       </div>
     </div>
   </section>
   <section>
-    <div>c++, java, python, javascript</div>
-    <div>
-      CODEEE
+    <div id="info" class="border-rounded position-right">
+      &#10068;
+    </div>
+    <div id="info-dump">
+      A visualizer for different sorting alogrithms using javascript and Brython
+      to implement python on the browser.
+      <br />
+      <hr />
+      Authors: Michael Sico, Carlos Roman
     </div>
   </section>
+
+  <body onload="brython()">
+
+  <script type="text/python">
+    from browser import document
+    import json
+
+    def partition(arr, low, high, history):
+        i = (low - 1)
+        pivot = arr[high]
+
+        for j in range(low, high):
+            if arr[j] < pivot:
+                i = i + 1
+                arr[i], arr[j] = arr[j], arr[i]
+                history.append([j, i])
+
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        history.append([i + 1, high])
+        return i + 1
+
+    # Bubble Sort----------------------------------------------------------------------------
+    def bubbleSort(arr, history):
+        n = len(arr)  # gets the length of the array
+        # Go through the whole array
+        for i in range(n):  # range(start, stop, step) -> (optinal, required, optional)
+            # After this for loop the last i elements should be in order
+            for j in range(0, n - i - 1):
+                # If current element is greater than next element swap
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                    history.append([j, j+1])
+                else:
+                    history.append([j, j])
+
+    # Selection Sort----------------------------------------------------------------------------
+    def selectionSort(arr, history):
+        n = len(arr)
+
+        for i in range(n):  # go through the array
+            min = i
+            for j in range(i + 1, n):  # find the smallest element from the remaining array
+                if arr[min] > arr[j]:
+                    min = j
+
+            arr[i], arr[min] = arr[min], arr[i]  # swap
+            history.append([min, i])
+
+    # Insertion Sort----------------------------------------------------------------------------
+    def insertionSort(arr, history):
+        n = len(arr)
+
+        for i in range(1, n):
+            key = arr[i]
+
+            # Move elements of arr[0..i-1], that are
+            # greater than key, to one position ahead
+            # of their current position
+            j = i - 1
+            while j >= 0 and key < arr[j]:
+                arr[j + 1] = arr[j]
+                history.append([j, j + 1])
+                j -= 1
+            arr[j + 1] = key
+            history.append([i, j + 1])
+
+    # Merge Sort----------------------------------------------------------------------------
+    def mergeSort(arr, history):
+        n = len(arr)
+        if n > 1:
+            mid = n // 2        #need // for floor division, using / will give error
+            left = arr[:mid]    #:mid returns everything before mid including mid
+            right = arr[mid:]   # mid: returns everything after mid
+
+            mergeSort(left)
+            mergeSort(right)
+
+            i = j = k = 0
+
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    arr[k] = left[i]
+                    i += 1
+                    history.append([k, i])
+                else:
+                    arr[k] = right[j]
+                    j += 1
+                    history.append([k, j])
+                k += 1
+
+            while i < len(left):
+                arr[k] = left[i]
+                i += 1
+                k += 1
+                history.append([k, i])
+
+            while j < len(right):
+                arr[k] = right[j]
+                j += 1
+                k += 1
+                history.append([k, j])
+
+    # Quick Sort----------------------------------------------------------------------------
+
+    def quickSort(arr, low, high, history):
+            if low < high:
+                par = partition(arr, low, high, history)
+
+                quickSort(arr, low, par - 1, history)
+                quickSort(arr, par + 1, high, history)
+
+    def transform_m():
+        history = []
+        if event["sort"] == "bubble":
+            bubbleSort(event["list"], history)
+        elif event["sort"] == "selection":
+            selectionSort(event["list"], history)
+        elif event["sort"] == "insertion":
+            insertionSort(event["list"], history)
+        elif event["sort"] == "merge":
+            mergeSort(event["list"], history)
+        elif event["sort"] == "quick":
+            quickSort(event["list"], 0, len(event["list"]) - 1, history)
+
+
+  </script>
 
   <script src="sorting-visualizer.js"></script>
 </body>
