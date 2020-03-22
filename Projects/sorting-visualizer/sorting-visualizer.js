@@ -36,21 +36,58 @@ function createColumn() {
   document.getElementById("swap").disabled = false;
 }
 
-function swapCol(index_1, index_2) {
-  var temp = num_list.list[index_1];
-  num_list.list[index_1] = num_list.list[index_2];
-  num_list.list[index_2] = temp;
-  elem1 = document.getElementsByClassName("col-" + index_1);
-  // elem1.item(0).style.backgroundColor = "red";
-  elem1.item(0).style.height = (num_list.list[index_1] * .1) + "vh";
-  elem2 = document.getElementsByClassName("col-" + index_2)
-  // elem2.item(0).style.backgroundColor = "red";
-  elem2.item(0).style.height = (num_list.list[index_2] * .1) + "vh";
-  // elem1.item(0).style.backgroundColor = "";
-  // elem2.item(0).style.backgroundColor = "";
+async function swapCol(index_1, index_2) {
+  return await Promise.all([
+    swapValues(),
+    swapHeight()
+  ]);
+  async function swapValues() {
+    const tempValue = num_list.list[index_1];
+    num_list.list[index_1] = num_list.list[index_2];
+    num_list.list[index_2] = tempValue;
+  }
+  async function swapHeight() {
+    const tempHeight = getBar(index_1).style.height;
+    let elem1 = getBar(index_1);
+    let elem2 = getBar(index_2);
+    elem1.style.height = elem2.style.height;
+    elem2.style.height = tempHeight;
+    function getBar(index) {
+      return document.getElementsByClassName("col-" + index).item(0);
+    }
+  }
 }
 
-function transform() {
+async function transform() {
+  let fullLength = num_list.list.length < 0
+    ? 0
+    : num_list.list.length;
+  async function swap() {
+    console.log(num_list.list);
+    if (fullLength !== 0) {
+      let startPoint = 0;
+      num_list.list.map((current, index) => {
+        if (index !== 0) {
+          if (num_list.list[index - 1] > num_list.list[index]) {
+            await swapCol(num_list.list[first], num_list.list[second]);
+            startPoint = index;
+          }
+        }
+      });
+      fullLength = startPoint;
+      await swap();
+    }
+  }
+  document.getElementById("swap").disabled = true;
+  // this is just bubble sort logic
+  swap();
+  // setInterval(() => { swap(); }, 0);
+  // I think I don't have the right idea about the data structure for history_JSON
+  // why [[0,0], [1,1]...]
+  // this sort of structure makes this especially hard to reason about
+  // especially for the brython code
+  /*
+  // swapCol(history_JSON.history[param.index][0],history_JSON.history[param.index][1]);
   function swap(param) {
     if (param.index >= history_JSON.history.length) {
       clearInterval(transform);
@@ -60,11 +97,9 @@ function transform() {
       param.index++;
     }
   }
-
-  const param = { index: 0 };
-  document.getElementById("swap").disabled = true;
+  */
+  // const param = { index: 0 };
   //setInterval(swap, 0, param);
-  setInterval(function(){swap(param)}, 0);
 }
 
 document.getElementById("info").onmouseover = function(){
