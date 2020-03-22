@@ -47,12 +47,13 @@
       to implement python on the browser.
       <br />
       <hr />
-      Authors: Michael Sico, Carlos Roman
+      Authors: Michael Sico, Carlos Roman, Devin Checa
     </div>
   </section>
 
-  <body>
   <!--
+  I see python implementation here, but the original has two <body> tags which might cause
+  browser issues
   <body onload="brython()">
   -->
 
@@ -177,8 +178,6 @@
         elif event["sort"] == "quick":
             quickSort(event["list"], 0, len(event["list"]) - 1, history)
 
-
   </script>
-
   <script src="sorting-visualizer.js"></script>
 </body>
