@@ -1,33 +1,37 @@
 var num_list;
 
 function convToJSON() {
-  var text = document.getElementById("num-list").value;
-  if (text == "") {
-    text = new Array();
-    for (var i = 0; i < 100; i++) {
-      text.push(Math.ceil(Math.random() * 500));
-    }
-    num_list = {
-      list:text
-    }
-  } else {
-    num_list = {
-      list:text.split(" ")
+  const userDataInput = document.getElementById("num-list").value;
+  if (userDataInput) {
+    num_list = { list: userDataInput.split(" ") };
+    return;
+  }
+  generateRandomData();
+  function generateRandomData() {
+    const data = [];
+    let i = 0;
+    fillArray();
+    num_list = { list: data };
+    function fillArray() {
+      if (i < 100) {
+        data.push(Math.ceil(Math.random() * 500));
+        i = i + 1;
+        fillArray();
+      }
     }
   }
 }
 
 function createColumn() {
-  var container = document.getElementById("vis-container"),
-  elem, i;
+  const container = document.getElementById("vis-container");
   convToJSON();
-  for (i = 0; i < num_list.list.length; i++) {
-    elem = document.createElement("div");
+  num_list.list.map((current, index) => {
+    const elem = document.createElement("div");
     elem.id = "vis-column";
-    elem.className = "col-"+i;
-    elem.style = ("height:" + (num_list.list[i] * .1) + "vh");
+    elem.className = "col-" + index;
+    elem.style = ("height:" + (current * .1) + "vh");
     container.appendChild(elem);
-  }
+  });
   document.getElementById("populate").disabled = true;
   document.getElementById("swap").disabled = false;
 }
@@ -47,7 +51,7 @@ function swapCol(index_1, index_2) {
 }
 
 function transform() {
-  var swap = function (param) {
+  function swap(param) {
     if (param.index >= history_JSON.history.length) {
       clearInterval(transform);
       document.getElementById("swap").disabled = false;
@@ -57,7 +61,7 @@ function transform() {
     }
   }
 
-  var param = {index:0};
+  const param = { index: 0 };
   document.getElementById("swap").disabled = true;
   //setInterval(swap, 0, param);
   setInterval(function(){swap(param)}, 0);
