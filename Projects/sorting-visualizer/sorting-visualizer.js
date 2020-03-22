@@ -36,17 +36,15 @@ function createColumn() {
   document.getElementById("swap").disabled = false;
 }
 
-async function swapCol(index_1, index_2) {
-  return await Promise.all([
-    swapValues(),
-    swapHeight()
-  ]);
-  async function swapValues() {
+function swapCol(index_1, index_2) {
+  swapValues();
+  swapHeight();
+  function swapValues() {
     const tempValue = num_list.list[index_1];
     num_list.list[index_1] = num_list.list[index_2];
     num_list.list[index_2] = tempValue;
   }
-  async function swapHeight() {
+  function swapHeight() {
     const tempHeight = getBar(index_1).style.height;
     let elem1 = getBar(index_1);
     let elem2 = getBar(index_2);
@@ -62,25 +60,25 @@ async function transform() {
   let fullLength = num_list.list.length < 0
     ? 0
     : num_list.list.length;
-  async function swap() {
-    console.log(num_list.list);
-    if (fullLength !== 0) {
+  let currentLength = num_list.list.length;
+  function swap() {
+    if (currentLength !== 0) {
       let startPoint = 0;
-      num_list.list.map(async (current, index) => {
+      num_list.list.map((current, index) => {
         if (index !== 0) {
           if (num_list.list[index - 1] > num_list.list[index]) {
-            await swapCol(index - 1, index);
+            swapCol(index - 1, index);
             startPoint = index;
           }
         }
       });
-      fullLength = startPoint;
-      await swap();
+      currentLength = startPoint;
+      setInterval(() => { swap(); }, 120);
     }
   }
   document.getElementById("swap").disabled = true;
   // this is just bubble sort logic
-  swap();
+  if (fullLength !== 0) { swap(); }
   document.getElementById("populate").disabled = false;
   document.getElementById("swap").disabled = true;
   // setInterval(() => { swap(); }, 0);
