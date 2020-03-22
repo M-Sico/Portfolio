@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Michael Sico, Carlos Roman">
-
   <title>Sorting Algorithm Visualizer</title>
-
   <link href="sorting-visualizer.css" rel="stylesheet">
-  <script type="text/javascript"
-       src="https://cdn.jsdelivr.net/npm/brython@3.8.7/brython.min.js">
-   </script>
-
+  <!--
+    <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/brython@3.8.7/brython.min.js">
+    </script>
+  -->
 </head>
 <body>
   <section>
@@ -24,7 +21,7 @@
       </div>
       <div id="vis-controls" class="height-10em">
         <div class="float-left width-75 height-100">
-          <textarea id="num-list" class="width-100 height-100" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers"></textarea>
+          <textarea id="num-list" class="width-100 height-100" name="number_list" placeholder="1 2 3 4 ... or leave blank for random set of numbers (leave spaces between integers)"></textarea>
         </div>
         <div class="float-right width-24">
           <select name="sorting-algorithm" class="bttn width-100 display-block">
@@ -50,11 +47,15 @@
       to implement python on the browser.
       <br />
       <hr />
-      Authors: Michael Sico, Carlos Roman
+      Authors: Michael Sico, Carlos Roman, Devin Checa
     </div>
   </section>
 
+  <!--
+  I see python implementation here, but the original has two <body> tags which might cause
+  browser issues
   <body onload="brython()">
+  -->
 
   <script type="text/python">
     from browser import document
@@ -177,8 +178,7 @@
         elif event["sort"] == "quick":
             quickSort(event["list"], 0, len(event["list"]) - 1, history)
 
-
   </script>
-
   <script src="sorting-visualizer.js"></script>
+  <script src="data.js"></script>
 </body>
