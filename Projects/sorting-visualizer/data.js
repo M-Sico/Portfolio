@@ -1,5 +1,4 @@
-var num_list;
-history_JSON = {
+const history_JSON = {
   history:[
     [0,0],
     [1,1],
@@ -4955,80 +4954,3 @@ history_JSON = {
 
 // test data
 //49 126 224 169 208 383 496 140 403 206 13 138 376 451 107 177 163 278 101 411 66 326 153 45 388 326 247 156 302 265 364 179 447 388 370 94 28 32 44 102 482 229 418 322 396 81 235 90 337 51 79 201 440 101 31 384 374 462 113 485 126 9 324 430 344 458 201 122 162 241 394 356 408 467 389 198 418 131 67 217 415 120 111 107 256 401 400 317 490 249 353 310 476 33 365 273 467 480 250 1
-
-function convToJSON() {
-  var text = document.getElementById("num-list").value;
-  if (text == "") {
-    text = new Array();
-    for (var i = 0; i < 100; i++) {
-      text.push(Math.ceil(Math.random() * 500));
-    }
-    num_list = {
-      list:text
-    }
-  } else {
-    num_list = {
-      list:text.split(" ")
-    }
-  }
-}
-
-function createColumn() {
-  var container = document.getElementById("vis-container"),
-  elem, i;
-  convToJSON();
-  for (i = 0; i < num_list.list.length; i++) {
-    elem = document.createElement("div");
-    elem.id = "vis-column";
-    elem.className = "col-"+i;
-    elem.style = ("height:" + (num_list.list[i] * .1) + "vh");
-    container.appendChild(elem);
-  }
-  document.getElementById("populate").disabled = true;
-  document.getElementById("swap").disabled = false;
-}
-
-function swapCol(index_1, index_2) {
-  var temp = num_list.list[index_1];
-  num_list.list[index_1] = num_list.list[index_2];
-  num_list.list[index_2] = temp;
-  elem1 = document.getElementsByClassName("col-" + index_1);
-  // elem1.item(0).style.backgroundColor = "red";
-  elem1.item(0).style.height = (num_list.list[index_1] * .1) + "vh";
-  elem2 = document.getElementsByClassName("col-" + index_2)
-  // elem2.item(0).style.backgroundColor = "red";
-  elem2.item(0).style.height = (num_list.list[index_2] * .1) + "vh";
-  // elem1.item(0).style.backgroundColor = "";
-  // elem2.item(0).style.backgroundColor = "";
-}
-
-function transform() {
-  var swap = function (param) {
-    if (param.index >= history_JSON.history.length) {
-      clearInterval(transform);
-      document.getElementById("swap").disabled = false;
-    } else {
-      swapCol(history_JSON.history[param.index][0],history_JSON.history[param.index][1]);
-      param.index++;
-    }
-  }
-
-  var param = {index:0};
-  document.getElementById("swap").disabled = true;
-  //setInterval(swap, 0, param);
-  setInterval(function(){swap(param)}, 0);
-}
-
-document.getElementById("info").onmouseover = function(){
-  document.getElementById("info-dump").style.display = "inline-block";
-}
-document.getElementById("info").onmouseout = function(){
-  document.getElementById("info-dump").style.display = "none";
-}
-document.getElementById("swap").disabled = true;
-
-//array: array of all elements with ID column
-//const bar_width = screen.availwidth / array.length;
-//document.getElement
-
-//Parallel processing
