@@ -66,10 +66,10 @@ async function transform() {
     console.log(num_list.list);
     if (fullLength !== 0) {
       let startPoint = 0;
-      num_list.list.map((current, index) => {
+      num_list.list.map(async (current, index) => {
         if (index !== 0) {
           if (num_list.list[index - 1] > num_list.list[index]) {
-            await swapCol(num_list.list[first], num_list.list[second]);
+            await swapCol(index - 1, index);
             startPoint = index;
           }
         }
@@ -81,6 +81,8 @@ async function transform() {
   document.getElementById("swap").disabled = true;
   // this is just bubble sort logic
   swap();
+  document.getElementById("populate").disabled = false;
+  document.getElementById("swap").disabled = true;
   // setInterval(() => { swap(); }, 0);
   // I think I don't have the right idea about the data structure for history_JSON
   // why [[0,0], [1,1]...]
